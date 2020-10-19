@@ -1,7 +1,7 @@
 package db
 
-func ToPokemonInstance(pokemon PokemonDefinition) Pokemon {
-	return Pokemon{
+func ToPokemonInstance(pokemon PokemonDefinition) PokemonEntity {
+	return PokemonEntity{
 		Identifier:     pokemon.Id,
 		Name:           pokemon.Name,
 		Classification: pokemon.Classification,
@@ -23,11 +23,11 @@ func ToPokemonInstance(pokemon PokemonDefinition) Pokemon {
 	}
 }
 
-func toPokemonTypes(pokemonDefinitionTypes []string) []PokemonType {
-	var pokemonTypes []PokemonType
+func toPokemonTypes(pokemonDefinitionTypes []string) []PokemonEntityType {
+	var pokemonTypes []PokemonEntityType
 
 	for _, pokemonType := range pokemonDefinitionTypes {
-		pokemonTypes = append(pokemonTypes, PokemonType{Name: pokemonType})
+		pokemonTypes = append(pokemonTypes, PokemonEntityType{Name: pokemonType})
 	}
 
 	return pokemonTypes

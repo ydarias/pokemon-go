@@ -1,7 +1,12 @@
 package repositories
 
 type Pokemon struct {
-	Identifier     string
+	Id             string
 	Name           string
 	Classification string
+	Types          []PokemonType
+}
+
+type PokemonType struct {
+	Name string
 }

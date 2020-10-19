@@ -5,19 +5,29 @@ import (
 	"github.com/ydarias/pokemon-go/server/config"
 	"github.com/ydarias/pokemon-go/server/controllers"
 	"github.com/ydarias/pokemon-go/server/db"
+	"github.com/ydarias/pokemon-go/server/repositories"
 )
 
-func main() {
+func setupRouter() *gin.Engine {
 	dbConnection := db.Connect()
 
-	db.Populate(dbConnection)
+	populator := db.Populator{DbConnection: dbConnection}
+	if !populator.IsPopulated() {
+		populator.Populate()
+	}
 
-	port := config.Port()
+	pokemonRepository := repositories.PokemonDbRepository{DbConnection: dbConnection}
 
 	router := gin.Default()
 
 	router.GET("/ping", controllers.Ping)
-	router.GET("/pokemons", controllers.Pokemons(dbConnection))
+	router.GET("/pokemons", controllers.Pokemons(pokemonRepository))
 
+	return router
+}
+
+func main() {
+	port := config.Port()
+	router := setupRouter()
 	router.Run(":" + port)
 }
