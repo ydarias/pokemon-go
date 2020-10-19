@@ -5,8 +5,14 @@ type Pokemon struct {
 	Name           string
 	Classification string
 	Types          []PokemonType
+	Resistant      []PokemonAttack
+	Weaknesses     []PokemonAttack
 }
 
 type PokemonType struct {
+	Name string
+}
+
+type PokemonAttack struct {
 	Name string
 }

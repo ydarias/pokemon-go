@@ -11,12 +11,11 @@ type PokemonEntity struct {
 	Identifier     string
 	Name           string
 	Classification string
-	Types          []PokemonEntityType `gorm:"many2many:types_to_pokemon_type;"`
+	Types          []PokemonEntityType   `gorm:"many2many:types_to_pokemon_type;"`
+	Resistant      []PokemonEntityAttack `gorm:"many2many:attacks_to_pokemon_resistant;"`
+	Weaknesses     []PokemonEntityAttack `gorm:"many2many:attacks_to_pokemon_weaknesses;"`
 	/*
-
-			Resistant []string
-		Weaknesses []string
-		Weight struct {
+		Weight         struct {
 			Minimum string
 			Maximum string
 		}
@@ -24,15 +23,15 @@ type PokemonEntity struct {
 			Minimum string
 			Maximum string
 		}
-		FleeRate float64
+		FleeRate              float64
 		EvolutionRequirements struct {
 			Amount int
-			Name string
+			Name   string
 		}
 		Evolutions []Evolution
-		MaxCP int
-		MaxHP int
-		Attacks PokemonAttacks
+		MaxCP      int
+		MaxHP      int
+		Attacks    PokemonAttacks
 
 	*/
 }
@@ -42,6 +41,11 @@ func (PokemonEntity) TableName() string {
 }
 
 type PokemonEntityType struct {
+	gorm.Model
+	Name string
+}
+
+type PokemonEntityAttack struct {
 	gorm.Model
 	Name string
 }

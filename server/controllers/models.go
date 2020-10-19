@@ -5,4 +5,6 @@ type PokemonView struct {
 	Name           string
 	Classification string
 	Types          []string
+	Resistant      []string
+	Weaknesses     []string
 }

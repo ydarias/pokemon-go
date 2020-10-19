@@ -35,6 +35,8 @@ func (p Populator) Populate() {
 	for _, pokemon := range pokemons {
 		pokemonInstance := ToPokemonInstance(pokemon)
 		pokemonInstance.Types = p.populateTypes(pokemon.Types)
+		pokemonInstance.Resistant = p.populateAttacks(pokemon.Resistant)
+		pokemonInstance.Weaknesses = p.populateAttacks(pokemon.Weaknesses)
 		p.DbConnection.Where(PokemonEntity{Identifier: pokemon.Id}).FirstOrCreate(&pokemonInstance)
 	}
 }
@@ -48,9 +50,25 @@ func (p Populator) populateTypes(pokemonTypes []string) []PokemonEntityType {
 	return pokemonEntityTypes
 }
 
+func (p Populator) populateAttacks(pokemonAttacks []string) []PokemonEntityAttack {
+	var pokemonEntityAttacks []PokemonEntityAttack
+	for _, pokemonAttack := range pokemonAttacks {
+		pokemonEntityAttacks = append(pokemonEntityAttacks, p.findOrCreateAttack(pokemonAttack))
+	}
+
+	return pokemonEntityAttacks
+}
+
 func (p Populator) findOrCreateType(pokemonType string) PokemonEntityType {
 	var pokemonEntityType PokemonEntityType
 	p.DbConnection.Where(PokemonEntityType{Name: pokemonType}).FirstOrCreate(&pokemonEntityType)
 
 	return pokemonEntityType
+}
+
+func (p Populator) findOrCreateAttack(pokemonAttack string) PokemonEntityAttack {
+	var pokemonEntityAttack PokemonEntityAttack
+	p.DbConnection.Where(PokemonEntityAttack{Name: pokemonAttack}).FirstOrCreate(&pokemonEntityAttack)
+
+	return pokemonEntityAttack
 }

@@ -16,7 +16,7 @@ type PokemonDbRepository struct {
 
 func (p PokemonDbRepository) FindPokemons() []Pokemon {
 	var pokemonEntities []db.PokemonEntity
-	result := p.DbConnection.Preload("Types").Find(&pokemonEntities)
+	result := p.DbConnection.Preload("Types").Preload("Resistant").Preload("Weaknesses").Find(&pokemonEntities)
 	if result.Error != nil {
 		fmt.Print(result.Error)
 	}
@@ -40,6 +40,8 @@ func toPokemon(pokemonEntity db.PokemonEntity) Pokemon {
 		Name:           pokemonEntity.Name,
 		Classification: pokemonEntity.Classification,
 		Types:          toPokemonTypes(pokemonEntity.Types),
+		Resistant:      toPokemonAttacks(pokemonEntity.Resistant),
+		Weaknesses:     toPokemonAttacks(pokemonEntity.Weaknesses),
 	}
 }
 
@@ -51,4 +53,14 @@ func toPokemonTypes(entityTypes []db.PokemonEntityType) []PokemonType {
 	}
 
 	return types
+}
+
+func toPokemonAttacks(entityAttacks []db.PokemonEntityAttack) []PokemonAttack {
+	var attacks []PokemonAttack
+
+	for _, entityAttack := range entityAttacks {
+		attacks = append(attacks, PokemonAttack{entityAttack.Name})
+	}
+
+	return attacks
 }
