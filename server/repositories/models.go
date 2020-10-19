@@ -7,6 +7,13 @@ type Pokemon struct {
 	Types          []PokemonType
 	Resistant      []PokemonAttack
 	Weaknesses     []PokemonAttack
+	MaxWeight      string
+	MinWeight      string
+	MaxHeight      string
+	MinHeight      string
+	FleeRate       float64
+	MaxCP          int
+	MaxHP          int
 }
 
 type PokemonType struct {

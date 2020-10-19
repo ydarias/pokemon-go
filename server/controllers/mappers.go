@@ -13,6 +13,14 @@ func toPokemonsView(pokemons []repositories.Pokemon) []PokemonView {
 }
 
 func toPokemonView(pokemon repositories.Pokemon) PokemonView {
+	weight := RangeView{
+		Maximum: pokemon.MaxWeight,
+		Minimum: pokemon.MinWeight,
+	}
+	height := RangeView{
+		Maximum: pokemon.MaxHeight,
+		Minimum: pokemon.MinHeight,
+	}
 	return PokemonView{
 		Id:             pokemon.Id,
 		Name:           pokemon.Name,
@@ -20,6 +28,11 @@ func toPokemonView(pokemon repositories.Pokemon) PokemonView {
 		Types:          toPokemonViewTypes(pokemon.Types),
 		Resistant:      toPokemonViewAttacks(pokemon.Resistant),
 		Weaknesses:     toPokemonViewAttacks(pokemon.Weaknesses),
+		Weight:         weight,
+		Height:         height,
+		FleeRate:       pokemon.FleeRate,
+		MaxCP:          pokemon.MaxCP,
+		MaxHP:          pokemon.MaxHP,
 	}
 }
 

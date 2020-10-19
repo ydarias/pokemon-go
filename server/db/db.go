@@ -33,7 +33,7 @@ func (p Populator) IsPopulated() bool {
 func (p Populator) Populate() {
 	pokemons := ParsePokemons()
 	for _, pokemon := range pokemons {
-		pokemonInstance := ToPokemonInstance(pokemon)
+		pokemonInstance := ToPokemonEntity(pokemon)
 		pokemonInstance.Types = p.populateTypes(pokemon.Types)
 		pokemonInstance.Resistant = p.populateAttacks(pokemon.Resistant)
 		pokemonInstance.Weaknesses = p.populateAttacks(pokemon.Weaknesses)

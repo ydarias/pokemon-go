@@ -1,25 +1,17 @@
 package db
 
-func ToPokemonInstance(pokemon PokemonDefinition) PokemonEntity {
+func ToPokemonEntity(pokemon PokemonDefinition) PokemonEntity {
 	return PokemonEntity{
 		Identifier:     pokemon.Id,
 		Name:           pokemon.Name,
 		Classification: pokemon.Classification,
-		Types:          toPokemonTypes(pokemon.Types),
-		/*
-
-				Resistant:             pokemon.Resistant,
-			Weaknesses:            pokemon.Weaknesses,
-			Weight:                pokemon.Weight,
-			Height:                pokemon.Height,
-			FleeRate:              pokemon.FleeRate,
-			EvolutionRequirements: pokemon.EvolutionRequirements,
-			Evolutions:            toEvolutions(pokemon.Evolutions),
-			MaxCP:                 pokemon.MaxCP,
-			MaxHP:                 pokemon.MaxHP,
-			Attacks:               toPokemonAttacks(pokemon),
-
-		*/
+		MaxWeight:      pokemon.Weight.Maximum,
+		MinWeight:      pokemon.Weight.Minimum,
+		MaxHeight:      pokemon.Height.Maximum,
+		MinHeight:      pokemon.Height.Minimum,
+		FleeRate:       pokemon.FleeRate,
+		MaxCP:          pokemon.MaxCP,
+		MaxHP:          pokemon.MaxHP,
 	}
 }
 
