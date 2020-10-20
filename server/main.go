@@ -15,11 +15,13 @@ func setupRouter() *gin.Engine {
 	populator.Populate()
 
 	pokemonRepository := repositories.PokemonDbRepository{DbConnection: dbConnection}
+	pokemonTypesRepository := repositories.PokemonTypesDbRepository{DbConnection: dbConnection}
 
 	router := gin.Default()
 
 	router.GET("/ping", controllers.Ping)
-	router.GET("/pokemons", controllers.Pokemons(pokemonRepository))
+	router.GET("/pokemons", controllers.GetPokemons(pokemonRepository))
+	router.GET("/pokemons/types", controllers.GetPokemonTypes(pokemonTypesRepository))
 
 	return router
 }
