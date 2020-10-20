@@ -15,11 +15,13 @@ func (p PokemonsController) Get(c *gin.Context) {
 }
 
 func (p PokemonsController) GetById(c *gin.Context) {
-	pokemons := p.PokemonRepository.FindPokemons()
-	c.JSON(200, toPokemonsView(pokemons))
+	id := c.Param("id")
+	pokemon := p.PokemonRepository.FindPokemonById(id)
+	c.JSON(200, toPokemonView(pokemon))
 }
 
 func (p PokemonsController) GetByName(c *gin.Context) {
-	pokemons := p.PokemonRepository.FindPokemons()
-	c.JSON(200, toPokemonsView(pokemons))
+	name := c.Param("name")
+	pokemon := p.PokemonRepository.FindPokemonByName(name)
+	c.JSON(200, toPokemonView(pokemon))
 }

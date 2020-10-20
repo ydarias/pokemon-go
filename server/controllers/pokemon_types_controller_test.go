@@ -8,9 +8,10 @@ import (
 	"testing"
 )
 
-func TestGetPokemonTypes(t *testing.T) {
+func TestPokemonTypesController(t *testing.T) {
 	pokemonTypeRepository := PokemonTypesMockRepository{}
 	pokemonTypesController := PokemonTypesController{PokemonTypesRepository: pokemonTypeRepository}
+
 	t.Run("should return the types from the repository", func(t *testing.T) {
 		w := httptest.NewRecorder()
 		c, _ := gin.CreateTestContext(w)
@@ -21,8 +22,7 @@ func TestGetPokemonTypes(t *testing.T) {
 	})
 }
 
-type PokemonTypesMockRepository struct {
-}
+type PokemonTypesMockRepository struct{}
 
 func (p PokemonTypesMockRepository) FindTypes() []repositories.PokemonType {
 	return []repositories.PokemonType{

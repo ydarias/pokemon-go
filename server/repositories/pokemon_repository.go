@@ -8,6 +8,8 @@ import (
 
 type PokemonRepository interface {
 	FindPokemons() []Pokemon
+	FindPokemonById(id string) Pokemon
+	FindPokemonByName(name string) Pokemon
 }
 
 type PokemonDbRepository struct {
@@ -33,4 +35,12 @@ func (p PokemonDbRepository) FindPokemons() []Pokemon {
 	}
 
 	return toPokemons(pokemonEntities)
+}
+
+func (p PokemonDbRepository) FindPokemonById(id string) Pokemon {
+	return Pokemon{}
+}
+
+func (p PokemonDbRepository) FindPokemonByName(name string) Pokemon {
+	return Pokemon{}
 }
