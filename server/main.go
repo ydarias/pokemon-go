@@ -6,10 +6,14 @@ import (
 	"github.com/ydarias/pokemon-go/server/controllers"
 	"github.com/ydarias/pokemon-go/server/db"
 	"github.com/ydarias/pokemon-go/server/repositories"
+	"gorm.io/driver/sqlite"
 )
 
 func setupRouter() *gin.Engine {
-	dbConnection := db.Connect()
+	connection := db.Connection{
+		Dialector: sqlite.Open("test.db"),
+	}
+	dbConnection := connection.Connect()
 
 	populator := db.Populator{DbConnection: dbConnection}
 	populator.Populate()

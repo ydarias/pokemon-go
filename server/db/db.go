@@ -1,12 +1,16 @@
 package db
 
 import (
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
-func Connect() *gorm.DB {
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+type Connection struct {
+	Dialector gorm.Dialector
+	Config    gorm.Config
+}
+
+func (c Connection) Connect() *gorm.DB {
+	db, err := gorm.Open(c.Dialector, &c.Config)
 	if err != nil {
 		panic("failed to connect database")
 	}
