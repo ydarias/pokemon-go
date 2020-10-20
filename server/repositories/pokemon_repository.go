@@ -16,7 +16,18 @@ type PokemonDbRepository struct {
 
 func (p PokemonDbRepository) FindPokemons() []Pokemon {
 	var pokemonEntities []db.PokemonEntity
-	result := p.DbConnection.Preload("Types").Preload("Resistant").Preload("Weaknesses").Find(&pokemonEntities)
+	result := p.DbConnection.
+		Preload("Types").
+		Preload("Resistant").
+		Preload("Weaknesses").
+		Preload("EvolutionRequirements").
+		Preload("Evolutions").
+		Preload("PreviousEvolutions").
+		Preload("FastAttacks").
+		Preload("FastAttacks.Type").
+		Preload("SpecialAttacks").
+		Preload("SpecialAttacks.Type").
+		Find(&pokemonEntities)
 	if result.Error != nil {
 		fmt.Print(result.Error)
 	}
