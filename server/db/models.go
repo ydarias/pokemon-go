@@ -8,60 +8,72 @@ type Tabler interface {
 
 type PokemonEntity struct {
 	gorm.Model
-	Identifier     string
-	Name           string
-	Classification string
-	Types          []PokemonEntityType   `gorm:"many2many:types_to_pokemon_type;"`
-	Resistant      []PokemonEntityAttack `gorm:"many2many:attacks_to_pokemon_resistant;"`
-	Weaknesses     []PokemonEntityAttack `gorm:"many2many:attacks_to_pokemon_weaknesses;"`
-	MaxWeight      string
-	MinWeight      string
-	MaxHeight      string
-	MinHeight      string
-	FleeRate       float64
-	//		EvolutionRequirements struct {
-	//			Amount int
-	//			Name   string
-	//		}
-	//		Evolutions []Evolution
-	MaxCP int
-	MaxHP int
-	// Attacks PokemonAttacks
+	Identifier            string `gorm:"uniqueIndex"`
+	Name                  string `gorm:"uniqueIndex"`
+	Classification        string
+	Types                 []PokemonEntityType       `gorm:"many2many:types_to_pokemon_type;"`
+	Resistant             []PokemonEntityAttackType `gorm:"many2many:attacks_to_pokemon_resistant;"`
+	Weaknesses            []PokemonEntityAttackType `gorm:"many2many:attacks_to_pokemon_weaknesses;"`
+	MaxWeight             string
+	MinWeight             string
+	MaxHeight             string
+	MinHeight             string
+	FleeRate              float64
+	EvolutionRequirements PokemonEntityEvolutionRequirements `gorm:"foreignKey:PokemonId"`
+	Evolutions            []*PokemonEntity                   `gorm:"many2many:pokemon_evolutions"`
+	PreviousEvolutions    []*PokemonEntity                   `gorm:"many2many:pokemon_previous_evolutions"`
+	MaxCP                 int
+	MaxHP                 int
+	FastAttacks           []PokemonEntityAttack `gorm:"foreignKey:PokemonId"`
+	SpecialAttacks        []PokemonEntityAttack `gorm:"foreignKey:PokemonId"`
 }
 
 func (PokemonEntity) TableName() string {
-	return "Pokemons"
+	return "pokemons"
 }
 
 type PokemonEntityType struct {
-	gorm.Model
-	Name string
-}
-
-type PokemonEntityAttack struct {
-	gorm.Model
-	Name string
-}
-
-func (PokemonEntityType) TableName() string {
-	return "PokemonTypes"
-}
-
-type Evolution struct {
 	gorm.Model
 	Id   int
 	Name string
 }
 
-type Attack struct {
-	gorm.Model
-	Name   string
-	Type   string
-	Damage int
+func (PokemonEntityType) TableName() string {
+	return "pokemon_types"
 }
 
-type PokemonAttacks struct {
+type PokemonEntityAttackType struct {
 	gorm.Model
-	Fast    []Attack
-	Special []Attack
+	Id   int
+	Name string
+}
+
+func (PokemonEntityAttackType) TableName() string {
+	return "attack_types"
+}
+
+type PokemonEntityEvolutionRequirements struct {
+	gorm.Model
+	Id        int
+	Name      string
+	Amount    int
+	PokemonId int
+}
+
+func (PokemonEntityEvolutionRequirements) TableName() string {
+	return "evolution_requirements"
+}
+
+type PokemonEntityAttack struct {
+	gorm.Model
+	Id        int
+	Name      string
+	TypeId    int
+	Type      PokemonEntityAttackType `gorm:"foreignKey:TypeId"`
+	Damage    int
+	PokemonId int
+}
+
+func (PokemonEntityAttack) TableName() string {
+	return "pokemon_attacks"
 }

@@ -12,9 +12,7 @@ func setupRouter() *gin.Engine {
 	dbConnection := db.Connect()
 
 	populator := db.Populator{DbConnection: dbConnection}
-	if !populator.IsPopulated() {
-		populator.Populate()
-	}
+	populator.Populate()
 
 	pokemonRepository := repositories.PokemonDbRepository{DbConnection: dbConnection}
 

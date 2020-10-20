@@ -26,10 +26,11 @@ type PokemonDefinition struct {
 		Amount int
 		Name   string
 	}
-	Evolutions []PokemonDefinitionEvolution
-	MaxCP      int
-	MaxHP      int
-	Attacks    struct {
+	Evolutions         []PokemonDefinitionEvolution
+	PreviousEvolutions []PokemonDefinitionEvolution
+	MaxCP              int
+	MaxHP              int
+	Attacks            struct {
 		Fast    []AttackDefinition
 		Special []AttackDefinition
 	}

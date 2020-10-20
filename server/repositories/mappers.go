@@ -40,7 +40,7 @@ func toPokemonTypes(entityTypes []db.PokemonEntityType) []PokemonType {
 	return types
 }
 
-func toPokemonAttacks(entityAttacks []db.PokemonEntityAttack) []PokemonAttack {
+func toPokemonAttacks(entityAttacks []db.PokemonEntityAttackType) []PokemonAttack {
 	var attacks []PokemonAttack
 
 	for _, entityAttack := range entityAttacks {
