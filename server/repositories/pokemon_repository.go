@@ -38,9 +38,37 @@ func (p PokemonDbRepository) FindPokemons() []Pokemon {
 }
 
 func (p PokemonDbRepository) FindPokemonById(id string) Pokemon {
-	return Pokemon{}
+	var pokemonEntity db.PokemonEntity
+	p.DbConnection.
+		Preload("Types").
+		Preload("Resistant").
+		Preload("Weaknesses").
+		Preload("EvolutionRequirements").
+		Preload("Evolutions").
+		Preload("PreviousEvolutions").
+		Preload("FastAttacks").
+		Preload("FastAttacks.Type").
+		Preload("SpecialAttacks").
+		Preload("SpecialAttacks.Type").
+		Where("Identifier = ?", id).First(&pokemonEntity)
+
+	return toPokemon(pokemonEntity)
 }
 
 func (p PokemonDbRepository) FindPokemonByName(name string) Pokemon {
-	return Pokemon{}
+	var pokemonEntity db.PokemonEntity
+	p.DbConnection.
+		Preload("Types").
+		Preload("Resistant").
+		Preload("Weaknesses").
+		Preload("EvolutionRequirements").
+		Preload("Evolutions").
+		Preload("PreviousEvolutions").
+		Preload("FastAttacks").
+		Preload("FastAttacks.Type").
+		Preload("SpecialAttacks").
+		Preload("SpecialAttacks.Type").
+		Where("Name = ?", name).First(&pokemonEntity)
+
+	return toPokemon(pokemonEntity)
 }

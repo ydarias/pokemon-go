@@ -19,7 +19,7 @@ func TestPokemonsController(t *testing.T) {
 		c, _ := gin.CreateTestContext(w)
 
 		c.Params = append(c.Params, gin.Param{
-			Key:   "id",
+			Key:   "pokemonId",
 			Value: "001",
 		})
 		pokemonsController.GetById(c)
@@ -35,7 +35,7 @@ func TestPokemonsController(t *testing.T) {
 		c, _ := gin.CreateTestContext(w)
 
 		c.Params = append(c.Params, gin.Param{
-			Key:   "name",
+			Key:   "pokemonName",
 			Value: "bunny",
 		})
 		pokemonsController.GetByName(c)
