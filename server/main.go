@@ -17,11 +17,16 @@ func setupRouter() *gin.Engine {
 	pokemonRepository := repositories.PokemonDbRepository{DbConnection: dbConnection}
 	pokemonTypesRepository := repositories.PokemonTypesDbRepository{DbConnection: dbConnection}
 
+	pokemonController := controllers.PokemonsController{PokemonRepository: pokemonRepository}
+	pokemonTypeController := controllers.PokemonTypesController{PokemonTypesRepository: pokemonTypesRepository}
+
 	router := gin.Default()
 
 	router.GET("/ping", controllers.Ping)
-	router.GET("/pokemons", controllers.GetPokemons(pokemonRepository))
-	router.GET("/pokemons/types", controllers.GetPokemonTypes(pokemonTypesRepository))
+	router.GET("/pokemons", pokemonController.Get)
+	router.GET("/pokemons/types", pokemonTypeController.Get)
+	router.GET("/pokemons/id/:pokemonId", pokemonController.GetById)
+	router.GET("/pokemons/name/:pokemonName", pokemonController.GetByName)
 
 	return router
 }

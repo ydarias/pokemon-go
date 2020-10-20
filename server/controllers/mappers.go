@@ -105,3 +105,13 @@ func toAttackList(attacks []repositories.PokemonAttack) []AttackDetails {
 
 	return attackDetails
 }
+
+func toStringTypes(types []repositories.PokemonType) []string {
+	var result []string
+
+	for _, aType := range types {
+		result = append(result, aType.Name)
+	}
+
+	return result
+}

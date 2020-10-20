@@ -10,12 +10,12 @@ import (
 
 func TestGetPokemonTypes(t *testing.T) {
 	pokemonTypeRepository := PokemonTypesMockRepository{}
-	getPokemonTypesController := GetPokemonTypes(pokemonTypeRepository)
+	pokemonTypesController := PokemonTypesController{PokemonTypesRepository: pokemonTypeRepository}
 	t.Run("should return the types from the repository", func(t *testing.T) {
 		w := httptest.NewRecorder()
 		c, _ := gin.CreateTestContext(w)
 
-		getPokemonTypesController(c)
+		pokemonTypesController.Get(c)
 
 		assert.Equal(t, "[\"Foo\",\"Bar\"]", w.Body.String())
 	})
