@@ -18,7 +18,7 @@ func TestPokemonRepository(t *testing.T) {
 
 	pokemonRepository := PokemonDbRepository{DbConnection: dbConnection}
 
-	t.Run("puturru", func(t *testing.T) {
+	t.Run("should recover a list of pokemons", func(t *testing.T) {
 		pokemons := pokemonRepository.FindPokemons()
 
 		assert.Equal(t, 3, len(pokemons))
@@ -30,7 +30,7 @@ func TestPokemonRepository(t *testing.T) {
 		assert.Equal(t, "Bulbasaur", pokemon.Name)
 	})
 
-	t.Run("should recover a pokemon by id", func(t *testing.T) {
+	t.Run("should recover a pokemon by name", func(t *testing.T) {
 		pokemon := pokemonRepository.FindPokemonByName("Ivysaur")
 
 		assert.Equal(t, "002", pokemon.Id)
